@@ -25,15 +25,16 @@ This project demonstrates:
 ## 📈 Dashboard Preview
 
 ### Page 1: Executive Overview
-![Executive Overview](/dashboard-preview/screenshots/01-executive-overview.png)
+### Page 1: Executive Overview
+![Executive Overview](dashboard-preview/01-executive-overview.png)
 *High-level KPIs, top artists, and listening trends over time*
 
 ### Page 2: Skip Pattern Analysis
-![Skip Pattern Analysis](/dashboard-previewscreenshots/02-skip-pattern.png)
+![Skip Pattern Analysis](dashboard-preview/02-skip-pattern.png)
 *High-risk artists, hourly skip patterns, and position-based analysis*
 
 ### Page 3: Listener Behavior
-![Listener Behavior](/dashboard-previewscreenshots/03-listener-behavior.png)
+![Listener Behavior](dashboard-preview/03-listener-behavior.png)
 *Time of day distribution, session length, shuffle impact analysis*
 
 ---
