@@ -80,3 +80,81 @@ This project demonstrates:
 ---
 
 ## 📁 Data Pipeline
+CSV (57k rows)
+↓
+Python / Pandas
+↓
+Data Cleaning (remove nulls, filter short plays)
+↓
+Feature Engineering (hour, weekday, time_of_day)
+↓
+Sessionization (30-minute gap threshold)
+↓
+Skip Flag Creation (<30 seconds = skip)
+↓
+Export Clean CSV
+↓
+Power BI Dashboard
+
+
+### Key Features Created in Python
+
+| Feature | Logic | Business Use |
+|---------|-------|--------------|
+| `skipped` | `ms_played < 30000` | Skip rate analysis |
+| `session_id` | Gap > 30 min = new session | Session length analysis |
+| `track_position_in_session` | Order within session | Position skip analysis |
+| `time_of_day` | Morning/Afternoon/Evening/Night | Temporal patterns |
+| `is_weekend` | Saturday/Sunday | Weekend vs weekday behavior |
+
+---
+
+## 📐 DAX Measures Created
+
+```dax
+// Skip Rate
+Skip Rate = AVERAGE(clean_spotify_data[skipped])
+
+// Total Listening Hours
+Total Hours = SUM(clean_spotify_data[ms_played]) / 3600000
+
+// Average Session Length
+Avg Session Length = AVERAGE(clean_spotify_data[tracks_in_session])
+
+// Artist Skip Rate (with minimum plays filter)
+Artist Skip Rate = 
+VAR TotalPlays = 
+    CALCULATE(
+        COUNTROWS(clean_spotify_data),
+        ALLEXCEPT(clean_spotify_data, clean_spotify_data[artist_name])
+    )
+RETURN
+IF(TotalPlays >= 20, AVERAGE(clean_spotify_data[skipped]), BLANK())
+
+// Shuffle Impact
+Skip Rate Shuffle ON = 
+CALCULATE(
+    AVERAGE(clean_spotify_data[skipped]),
+    clean_spotify_data[shuffle] = TRUE()
+)
+
+spotify-listener-insights/
+│
+├── notebooks/
+│   └── spotify_wrapped_analysis.ipynb   
+│
+├── powerbi/
+│   └── spotify_listener_dashboard.pbix  
+│
+├── data/
+│   ├── raw/                              
+│   └── processed/                        
+│
+├── dashboard-preview/                          
+│   ├── 01-executive-overview.png
+│   ├── 02-skip-pattern.png
+│   └── 03-listener-behavior.png
+│
+├── requirements.txt                     
+├── .gitignore
+└── README.md
